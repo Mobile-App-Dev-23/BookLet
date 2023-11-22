@@ -61,3 +61,7 @@
 ![image](https://github.com/Mobile-App-Dev-23/BookLet/assets/99769226/79605660-5f16-4b59-b458-a3c147b00387)
 
 ![image](https://github.com/Mobile-App-Dev-23/BookLet/assets/99769226/911e5876-11ca-45d1-8397-e8a42195695e)
+
+
+## GIF
+https://github.com/Mobile-App-Dev-23/BookLet/blob/main/BookLet.gif

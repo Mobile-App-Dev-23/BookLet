@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_current"
+        android:icon="@drawable/open_book"
+        android:title="Current" />
+
+    <item
+        android:id="@+id/nav_completed"
+        android:icon="@drawable/book_stack"
+        android:title="Completed" />
+
+    <item
+        android:id="@+id/nav_future"
+        android:icon="@drawable/bookmarks"
+        android:title="Future" />
+</menu>

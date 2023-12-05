@@ -1,9 +1,14 @@
 package com.example.booklet
 
+import EditBookActivity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
+import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -86,6 +91,34 @@ class BooksAdapter(private val onItemClick: ((Book) -> Unit)? = null) : Recycler
             }
         }
     }
+
+    // Inside MainActivity class
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        // ... other setup code ...
+
+        // Get a reference to the future books RecyclerView
+        val futureBooksRecyclerView = findViewById<RecyclerView>(R.id.futureBooksRecyclerView)
+        // Assume futureBooks is a MutableList<Book> that you fetch from storage
+        val futureBooks = getFutureBooksFromStorage()
+
+        // Use the extension function to set up the RecyclerView
+        futureBooksRecyclerView.setupFutureBooks(futureBooks, this) { book ->
+            // Handle future book item click
+            // For example, open an EditBookActivity with the clicked book details
+            val intent = Intent(this, EditBookActivity::class.java)
+            intent.putExtra(EditBookActivity.EXTRA_BOOK, book)
+            startActivity(intent)
+        }
+    }
+
+    private fun getFutureBooksFromStorage(): MutableList<Book> {
+        // This method should return the future books from storage, e.g. SharedPreferences, Database, etc.
+        return mutableListOf() // Placeholder return
+    }
+
 }
 
 data class Book(
@@ -93,5 +126,5 @@ data class Book(
     var author: String,
     var page: Int,
     var notes: String
-    // Add more properties if needed
 )
+

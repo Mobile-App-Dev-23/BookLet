@@ -9,7 +9,7 @@ data class BookEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = "bookTitle") val title: String?,
     @ColumnInfo(name = "bookAuthor") val author: String?,
-    @ColumnInfo(name = "bookDescription") val descriptor: String?,
+    @ColumnInfo(name = "bookDescription") val description: String?,
     @ColumnInfo(name = "bookRating") val rating: Double?,
     @ColumnInfo(name = "bookPageCount") val pageCount: Int?,
     @ColumnInfo(name = "bookCoverURL") val coverUrl: String?,

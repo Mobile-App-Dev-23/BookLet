@@ -23,6 +23,9 @@ interface BookDAOs {
 
     // insert()
     @Insert
+    fun insertBook(book: BookEntity)
+
+    @Insert
     fun insertAllCurrents(books: CurrentBookEntity)
 
     @Insert

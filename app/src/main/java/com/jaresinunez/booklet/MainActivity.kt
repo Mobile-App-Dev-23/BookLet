@@ -25,8 +25,6 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val fragmentManager: FragmentManager = supportFragmentManager
-
         val completedBooksFragment: Fragment = CompletedBooksFragment()
         val currentBooksFragment: Fragment = CurrentBooksFragment()
         val futureBooksFragment: Fragment = FutureBooksFragment()
@@ -49,9 +47,8 @@ class MainActivity : AppCompatActivity() {
 
     }
     private fun replaceFragment(bookFragment: Fragment) {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.books_frame_layout, bookFragment)
-        fragmentTransaction.commit()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.books_frame_layout, bookFragment)
+            .commit()
     }
 }

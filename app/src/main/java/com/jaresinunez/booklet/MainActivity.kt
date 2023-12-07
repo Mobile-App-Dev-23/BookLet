@@ -1,17 +1,25 @@
 package com.jaresinunez.booklet
 
+import android.content.ClipData.Item
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.jaresinunez.booklet.databasestuff.entities.BookEntity
 import com.jaresinunez.booklet.databinding.ActivityMainBinding
 import com.jaresinunez.booklet.fragments.CompletedBooksFragment
 import com.jaresinunez.booklet.fragments.CurrentBooksFragment
 import com.jaresinunez.booklet.fragments.FutureBooksFragment
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import java.io.InputStream
 
 private const val TAG = "MainActivity/"
@@ -44,9 +52,30 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.selectedItemId = R.id.nav_current
     }
     private fun replaceFragment(bookFragment: Fragment) {
+        if (bookFragment is CurrentBooksFragment)
+            hideEmptyShelf((applicationContext as ItemApplication).db.bookDaos().getAllCurrents())
+        else if (bookFragment is CompletedBooksFragment)
+            hideEmptyShelf((applicationContext as ItemApplication).db.bookDaos().getAllCompleted())
+        else if (bookFragment is FutureBooksFragment)
+            hideEmptyShelf((applicationContext as ItemApplication).db.bookDaos().getAllFuture())
+
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.books_frame_layout, bookFragment)
         fragmentTransaction.commit()
+    }
+
+    private fun hideEmptyShelf(flowList: Flow<List<BookEntity>>){
+        lifecycleScope.launch {
+            launch {
+                flowList
+                    .collect { list ->
+                        if (list.size > 0)
+                            findViewById<ImageView>(R.id.empty_shelf_img).visibility = View.GONE
+                        else
+                            findViewById<ImageView>(R.id.empty_shelf_img).visibility = View.VISIBLE
+                    }
+            }
+        }
     }
 }

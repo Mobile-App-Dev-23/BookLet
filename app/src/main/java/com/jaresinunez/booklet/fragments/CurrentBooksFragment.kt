@@ -50,8 +50,8 @@ class CurrentBooksFragment : Fragment() {
         bookViewsRecyclerView.setHasFixedSize(true)
         bookAdapter = BookAdapter(
             view.context,
-            books
-        )
+            books,
+        ) {}
         bookViewsRecyclerView.adapter = bookAdapter
 
         bookViewsRecyclerView.layoutManager = LinearLayoutManager(activity).also {
@@ -59,12 +59,8 @@ class CurrentBooksFragment : Fragment() {
             bookViewsRecyclerView.addItemDecoration(dividerItemDecoration)
         }
 
-        updateAdapterWithDB()
+        updateAdapterWithDB(view)
 
-        if(books.isNotEmpty())
-            view.findViewById<ConstraintLayout>(R.id.card_layout).setBackgroundColor(Color.WHITE)
-        else
-            view.findViewById<ConstraintLayout>(R.id.card_layout).setBackgroundColor(Color.TRANSPARENT)
 
         addBookButton.setOnClickListener {
             val addBookFragment = AddBookFragment()
@@ -81,10 +77,10 @@ class CurrentBooksFragment : Fragment() {
 
             // Do something with the result
             Log.d("CurrentBooksFragment", "Received result: $result")
-            updateAdapterWithDB()
+            updateAdapterWithDB(view)
         }
     }
-    private fun updateAdapterWithDB() {
+    private fun updateAdapterWithDB(view: View) {
         // Perform database operations based on the result from FragmentB
         // Update your UI or trigger additional actions as needed
         lifecycleScope.launch {
@@ -118,6 +114,10 @@ class CurrentBooksFragment : Fragment() {
                 Log.e("DatabaseError", "Error loading books from database", e)
             }
         }
+        if(books.isNotEmpty())
+            view.setBackgroundColor(Color.WHITE)
+        else
+            view.setBackgroundColor(Color.TRANSPARENT)
     }
     private fun replaceFragment(fragment: Fragment) {
         val transaction = requireFragmentManager().beginTransaction()

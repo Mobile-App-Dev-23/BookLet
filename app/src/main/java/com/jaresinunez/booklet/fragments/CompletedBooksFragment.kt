@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jaresinunez.booklet.BookAdapter
 import com.jaresinunez.booklet.Constants
 import com.jaresinunez.booklet.DisplayItem
+import com.jaresinunez.booklet.ITEM_EXTRA
 import com.jaresinunez.booklet.ItemApplication
 import com.jaresinunez.booklet.R
 import kotlinx.coroutines.Dispatchers
@@ -43,8 +44,9 @@ class CompletedBooksFragment : Fragment() {
         bookViewsRecyclerView.setHasFixedSize(true)
         Constants.bookAdapter = BookAdapter(
             view.context,
-            books
-        )
+            books) { book ->
+            openReviewBookFragment(book)
+        }
         bookViewsRecyclerView.adapter = Constants.bookAdapter
 
         bookViewsRecyclerView.layoutManager = LinearLayoutManager(activity).also {
@@ -60,6 +62,19 @@ class CompletedBooksFragment : Fragment() {
         }
 
         return view
+    }
+    private fun openReviewBookFragment(book: DisplayItem) {
+        // Code to open ReviewBookFragment with the selected book
+        val reviewFragment = ReviewBookFragment()
+        val bundle = Bundle()
+        bundle.putSerializable(ITEM_EXTRA, book)
+        reviewFragment.arguments = bundle
+
+        // Use FragmentTransaction to replace the fragment
+        requireFragmentManager().beginTransaction()
+            .replace(R.id.books_frame_layout, reviewFragment)
+            .addToBackStack(null)
+            .commit()
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

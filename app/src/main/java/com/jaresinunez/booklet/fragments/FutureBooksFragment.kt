@@ -43,8 +43,8 @@ class FutureBooksFragment : Fragment() {
         bookViewsRecyclerView.setHasFixedSize(true)
         Constants.bookAdapter = BookAdapter(
             view.context,
-            books
-        )
+            books,
+        ){}
         bookViewsRecyclerView.adapter = Constants.bookAdapter
 
         bookViewsRecyclerView.layoutManager = LinearLayoutManager(activity).also {

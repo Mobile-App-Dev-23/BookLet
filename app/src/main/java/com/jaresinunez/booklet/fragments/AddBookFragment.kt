@@ -144,13 +144,6 @@ class AddBookFragment : Fragment() {
         super.onAttach(context)
         // 'context' is now available
     }
-    private fun refreshFragment(fragment: Fragment) {
-        val fragmentManager = requireActivity().supportFragmentManager
-        val transaction = fragmentManager.beginTransaction()
-        transaction.replace(R.id.books_frame_layout, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
     companion object {
         @JvmStatic
         fun newInstance(): AddBookFragment {

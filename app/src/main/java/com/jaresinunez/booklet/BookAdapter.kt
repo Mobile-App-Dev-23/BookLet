@@ -8,20 +8,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.jaresinunez.booklet.databasestuff.ByteArrayHandling.getByteArrayFromResource
 
 const val ITEM_EXTRA = "ITEM_EXTRA"
 private const val TAG = "ItemAdapter"
 
 class BookAdapter (private val context: Context, private val items: List<DisplayItem>) :
     RecyclerView.Adapter<BookAdapter.ViewHolder>() {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.book_view, parent, false)
         return ViewHolder(view)
     }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        // TODO: Get the individual book and bind to holder
         val book = items[position]
         holder.bind(book)
     }
@@ -35,6 +33,7 @@ class BookAdapter (private val context: Context, private val items: List<Display
         private val bookAuthorTextView = itemView.findViewById<TextView>(R.id.book_author)
         private val bookDescriptionTextView = itemView.findViewById<TextView>(R.id.book_description)
         private val bookRatingTextView = itemView.findViewById<TextView>(R.id.book_rating)
+        private val bookCoverImageView = itemView.findViewById<ImageView>(R.id.book_cover)
 
         init {
             itemView.setOnClickListener(this)
@@ -47,10 +46,15 @@ class BookAdapter (private val context: Context, private val items: List<Display
             bookDescriptionTextView.text = book.bookDescription
             bookRatingTextView.text = book.bookRating.toString()
 
-            if (book.bookCoverURL != null){
-                val bookCoverImageView = itemView.findViewById<ImageView>(R.id.book_cover)
+            if (book.bookCoverImage != null){
                 Glide.with(context)
-                    .load(book.bookCoverURL)
+                    .load(book.bookCoverImage)
+                    .into(bookCoverImageView)
+            }
+            else {
+                val byteArray = getByteArrayFromResource(context.resources, R.drawable.book_cover_placeholder)
+                Glide.with(context)
+                    .load(byteArray)
                     .into(bookCoverImageView)
             }
         }

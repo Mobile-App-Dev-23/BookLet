@@ -3,12 +3,173 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background"
     tools:context=".fragments.AddBookFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:background="@color/design_default_color_primary"
+            android:textColor="@color/white"
+            android:text="Add Book"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20sp">
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/cardview_light_background"
+                android:elevation="8sp"
+                app:cardCornerRadius="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <Button
+                        android:id="@+id/upload_image_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Upload Image"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15sp"
+                        android:elevation="5sp"/>
+
+                    <ImageView
+                        android:id="@+id/book_cover_image"
+                        android:layout_width="130sp"
+                        android:layout_height="180sp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15sp"
+                        android:src="@drawable/book_cover_placeholder"
+                        android:visibility="gone"
+                        android:contentDescription="Book Cover" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20sp"
+                        android:layout_marginHorizontal="25sp"
+                        android:elevation="28sp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Title:"
+                            android:textSize="20sp"
+                            android:layout_marginEnd="10sp"
+                            android:textStyle="bold"/>
+                        <EditText
+                            android:id="@+id/book_title_edittext"
+                            android:layout_width="0sp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Enter Title"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15sp"
+                        android:layout_marginHorizontal="25sp"
+                        android:elevation="28sp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Author:"
+                            android:textSize="20sp"
+                            android:layout_marginEnd="10sp"
+                            android:textStyle="bold"/>
+                        <EditText
+                            android:id="@+id/book_author_edittext"
+                            android:layout_width="0sp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Enter Author"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="15sp"
+                        android:layout_marginHorizontal="25sp"
+                        android:elevation="28sp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Description:"
+                            android:textSize="20sp"
+                            android:layout_marginEnd="10sp"
+                            android:textStyle="bold"/>
+                        <EditText
+                            android:id="@+id/book_description_edittext"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:layout_marginTop="5sp"
+                            android:inputType="textMultiLine"
+                            android:maxLines="3"
+                            android:lines="1"
+                            android:gravity="top"
+                            android:hint="Description . . ."/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15sp"
+                            android:text="Shelf"
+                            android:textSize="20sp"
+                            android:textStyle="bold"/>
+                        <RadioGroup
+                            android:id="@+id/radio_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <RadioButton
+                                android:id="@+id/current"
+                                android:layout_width="0sp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Current"/>
+                            <RadioButton
+                                android:id="@+id/completed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15sp"
+                                android:text="Completed"/>
+                            <RadioButton
+                                android:id="@+id/future"
+                                android:layout_width="0sp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Future"/>
+                        </RadioGroup>
+
+                        <Button
+                            android:id="@+id/add_book_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15sp"
+                            android:layout_gravity="center"
+                            android:text="Add Book"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </ScrollView>
+
+
+    </LinearLayout>
 
 </FrameLayout>

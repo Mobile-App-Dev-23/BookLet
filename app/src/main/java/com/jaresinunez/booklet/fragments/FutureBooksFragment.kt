@@ -20,7 +20,7 @@ class FutureBooksFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_future_books, container, false)
 
-        val addBookButton = view.findViewById<Button>(R.id.add_book_button)
+        val addBookButton = view.findViewById<Button>(R.id.add_book_button_future)
         addBookButton.setOnClickListener {
             val addBookFragment = AddBookFragment()
             replaceFragment(addBookFragment)
@@ -30,13 +30,20 @@ class FutureBooksFragment : Fragment() {
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        val fragmentManager = activity?.supportFragmentManager
-        fragmentManager?.beginTransaction()
-            ?.replace(R.id.books_frame_layout, fragment)
-            ?.addToBackStack(null)
-            ?.commit()
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.books_frame_layout, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
+    override fun onResume() {
+        super.onResume()
+        val fragmentManager = requireActivity().supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.books_frame_layout, FutureBooksFragment())
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
     companion object {
         @JvmStatic
         fun newInstance(): FutureBooksFragment {

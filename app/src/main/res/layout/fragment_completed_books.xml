@@ -9,10 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/book_recycler_view"
+            android:id="@+id/book_recycler_view_complete"
             android:layout_width="0sp"
             android:layout_height="0sp"
-            app:layout_constraintBottom_toTopOf="@id/add_book_button"
+            app:layout_constraintBottom_toTopOf="@id/add_book_button_complete"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -20,7 +20,7 @@
             android:layout_marginBottom="15sp"/>
 
         <Button
-            android:id="@+id/add_book_button"
+            android:id="@+id/add_book_button_complete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -42,32 +42,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
         bottomNavigationView.selectedItemId = R.id.nav_current
-
-        /*
-        val fragmentManager = supportFragmentManager
-
-
-
-        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
-
-        // handle navigation selection
-        bottomNavigationView.setOnItemSelectedListener { item ->
-            lateinit var fragment: Fragment
-            when (item.itemId) {
-                R.id.nav_current -> fragment = currentBooksFragment
-                R.id.nav_completed -> fragment = completedBooksFragment
-                R.id.nav_future -> fragment = futureBooksFragment
-                //else -> fragment = currentBooksFragment
-            }
-            //fragmentManager.beginTransaction().replace(R.id.books_frame_layout, fragment).commit()
-            replaceFragment(fragment)
-            true
-        }
-
-        // Set default selection
-        bottomNavigationView.selectedItemId = R.id.nav_current
-
-         */
     }
     private fun replaceFragment(bookFragment: Fragment) {
         val fragmentManager = supportFragmentManager

@@ -64,7 +64,6 @@ class CurrentBooksFragment : Fragment() {
 
         return view
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setFragmentResultListener("requestKey") { _, result ->
@@ -72,7 +71,7 @@ class CurrentBooksFragment : Fragment() {
             val result = result.getString("resultKey")
 
             // Do something with the result
-            Log.d("FragmentA", "Received result: $result")
+            Log.d("CurrentBooksFragment", "Received result: $result")
             updateAdapterWithDB()
         }
     }
@@ -110,19 +109,16 @@ class CurrentBooksFragment : Fragment() {
             }
         }
     }
-
     private fun replaceFragment(fragment: Fragment) {
         val transaction = requireFragmentManager().beginTransaction()
         transaction.replace(R.id.books_frame_layout, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         // 'context' is now available
     }
-
     companion object {
         fun newInstance(): CurrentBooksFragment{
             return CurrentBooksFragment()

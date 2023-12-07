@@ -138,16 +138,6 @@ class AddBookFragment : Fragment() {
             bookCoverImageView.visibility = View.VISIBLE
             uploadImageButton.visibility = View.GONE
         }
-
-        /*
-        else if (requestCode == REQUEST_CODE){
-            val nextFragmentIndex = (fragmentManager?.backStackEntryCount ?: 0) - 1
-            if (nextFragmentIndex >= 1){
-                val nextFragmentEntry = fragmentManager?.getBackStackEntryAt(nextFragmentIndex)
-                refreshFragment(nextFragmentEntry.id)
-            }
-        }
-         */
     }
     override fun onAttach(context: Context) {
         super.onAttach(context)

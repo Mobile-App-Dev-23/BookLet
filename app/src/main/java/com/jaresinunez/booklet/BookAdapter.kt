@@ -26,9 +26,7 @@ class BookAdapter (private val context: Context, private val items: List<Display
 
     override fun getItemCount() = items.size
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
-        View.OnClickListener {
-
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private val bookTitleTextView = itemView.findViewById<TextView>(R.id.book_title)
         private val bookAuthorTextView = itemView.findViewById<TextView>(R.id.book_author)
         private val bookDescriptionTextView = itemView.findViewById<TextView>(R.id.book_description)
@@ -41,10 +39,22 @@ class BookAdapter (private val context: Context, private val items: List<Display
 
         // TODO: Write a helper method to help set up the onBindViewHolder method
         fun bind(book: DisplayItem) {
-            bookTitleTextView.text = book.bookTitle
-            bookAuthorTextView.text = book.bookAuthor
+            if(book.bookTitle != null)
+                bookTitleTextView.text = book.bookTitle
+            else
+                bookTitleTextView.text = "Title Unavailable"
+
+            if (book.bookAuthor != null)
+                bookAuthorTextView.text = book.bookAuthor
+            else
+                bookAuthorTextView.text = "Author Unavailable"
+
             bookDescriptionTextView.text = book.bookDescription
-            bookRatingTextView.text = book.bookRating.toString()
+
+            if (book.bookRating != null)
+                bookRatingTextView.text = book.bookRating.toString()
+            else
+                bookRatingTextView.visibility = View.GONE
 
             if (book.bookCoverImage != null){
                 Glide.with(context)

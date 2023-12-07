@@ -24,7 +24,6 @@ interface BookDAOs {
     @Query("SELECT bookCoverImage FROM book_table WHERE id = :bookId")
     fun getBookCoverImageById(bookId: Long): ByteArray?
 
-
     // insert()
     @Insert
     fun insertBook(book: BookEntity)

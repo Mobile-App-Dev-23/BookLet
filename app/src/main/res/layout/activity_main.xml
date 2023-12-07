@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/empty_shelf_img"
+        android:layout_width="300sp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/empty_shelf_img"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="50sp"/>
+
     <FrameLayout
         android:id="@+id/books_frame_layout"
         android:layout_width="match_parent"

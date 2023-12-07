@@ -83,6 +83,7 @@ class AddBookFragment : Fragment() {
                             title = bookTitleET.text.toString(),
                             author = bookAuthorET.text.toString(),
                             description = bookDescriptionET.text.toString(),
+                            review = null,
                             rating = null,
                             pageCount = null,
                             coverImage = byteArray,

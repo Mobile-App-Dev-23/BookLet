@@ -9,7 +9,7 @@ import com.jaresinunez.booklet.databasestuff.entities.CompletedBookEntity
 import com.jaresinunez.booklet.databasestuff.entities.CurrentBookEntity
 import com.jaresinunez.booklet.databasestuff.entities.FutureBookEntity
 
-@Database(entities = [BookEntity::class, CurrentBookEntity::class, FutureBookEntity::class, CompletedBookEntity::class], version = 2)
+@Database(entities = [BookEntity::class, CurrentBookEntity::class, FutureBookEntity::class, CompletedBookEntity::class], version = 3)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun bookDaos(): BookDAOs
 
@@ -28,7 +28,7 @@ abstract class AppDatabase : RoomDatabase() {
                 AppDatabase::class.java, "Books-db"
             )
                 .fallbackToDestructiveMigration()
-                .addMigrations(Migration1to2)
+                .addMigrations(Migration1to3)
                 .build()
     }
 }

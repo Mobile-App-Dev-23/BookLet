@@ -1,12 +1,16 @@
 package com.jaresinunez.booklet.fragments
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.graphics.toColor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
@@ -57,6 +61,11 @@ class CurrentBooksFragment : Fragment() {
 
         updateAdapterWithDB()
 
+        if(books.isNotEmpty())
+            view.findViewById<ConstraintLayout>(R.id.card_layout).setBackgroundColor(Color.WHITE)
+        else
+            view.findViewById<ConstraintLayout>(R.id.card_layout).setBackgroundColor(Color.TRANSPARENT)
+
         addBookButton.setOnClickListener {
             val addBookFragment = AddBookFragment()
             replaceFragment(addBookFragment)
@@ -88,6 +97,7 @@ class CurrentBooksFragment : Fragment() {
                             entity.title,
                             entity.author,
                             entity.description,
+                            entity.review,
                             entity.rating,
                             entity.pageCount,
                             entity.coverImage,

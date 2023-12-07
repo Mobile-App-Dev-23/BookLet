@@ -85,6 +85,7 @@ class FutureBooksFragment : Fragment() {
                                 entity.title,
                                 entity.author,
                                 entity.description,
+                                entity.review,
                                 entity.rating,
                                 entity.pageCount,
                                 entity.coverImage,

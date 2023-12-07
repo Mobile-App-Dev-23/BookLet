@@ -5,6 +5,7 @@ data class DisplayItem(
     val bookTitle: String?,
     val bookAuthor: String?,
     val bookDescription: String?,
+    val bookReview: String?,
     val bookRating: Double?,
     val bookPageCount: Int?,
     val bookCoverImage: ByteArray?,
@@ -23,6 +24,7 @@ data class DisplayItem(
         if (bookTitle != other.bookTitle) return false
         if (bookAuthor != other.bookAuthor) return false
         if (bookDescription != other.bookDescription) return false
+        if (bookReview != other.bookReview) return false
         if (bookRating != other.bookRating) return false
         if (bookPageCount != other.bookPageCount) return false
         if (bookCoverImage != null) {
@@ -42,6 +44,7 @@ data class DisplayItem(
         result = 31 * result + (bookTitle?.hashCode() ?: 0)
         result = 31 * result + (bookAuthor?.hashCode() ?: 0)
         result = 31 * result + (bookDescription?.hashCode() ?: 0)
+        result = 31 * result + (bookReview?.hashCode() ?: 0)
         result = 31 * result + (bookRating?.hashCode() ?: 0)
         result = 31 * result + (bookPageCount ?: 0)
         result = 31 * result + (bookCoverImage?.contentHashCode() ?: 0)

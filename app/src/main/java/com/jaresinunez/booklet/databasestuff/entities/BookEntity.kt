@@ -10,6 +10,7 @@ data class BookEntity(
     @ColumnInfo(name = "bookTitle") val title: String?,
     @ColumnInfo(name = "bookAuthor") val author: String?,
     @ColumnInfo(name = "bookDescription") val description: String?,
+    @ColumnInfo(name = "bookReview") val review: String?,
     @ColumnInfo(name = "bookRating") val rating: Double?,
     @ColumnInfo(name = "bookPageCount") val pageCount: Int?,
     @ColumnInfo(name = "bookCoverImage") val coverImage: ByteArray?,
@@ -31,6 +32,7 @@ data class BookEntity(
         if (title != other.title) return false
         if (author != other.author) return false
         if (description != other.description) return false
+        if (review != other.review) return false
         if (rating != other.rating) return false
         if (pageCount != other.pageCount) return false
         if (coverImage != null) {
@@ -50,6 +52,7 @@ data class BookEntity(
         result = 31 * result + (title?.hashCode() ?: 0)
         result = 31 * result + (author?.hashCode() ?: 0)
         result = 31 * result + (description?.hashCode() ?: 0)
+        result = 31 * result + (review?.hashCode() ?: 0)
         result = 31 * result + (rating?.hashCode() ?: 0)
         result = 31 * result + (pageCount ?: 0)
         result = 31 * result + (coverImage?.contentHashCode() ?: 0)

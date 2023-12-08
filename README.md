@@ -62,6 +62,8 @@
 
 ![image](https://github.com/Mobile-App-Dev-23/BookLet/assets/99769226/911e5876-11ca-45d1-8397-e8a42195695e)
 
+## App Logo
+![image](https://github.com/Mobile-App-Dev-23/BookLet/blob/main/logo.png?raw=true)
 
 ## Video Walkthrough
 

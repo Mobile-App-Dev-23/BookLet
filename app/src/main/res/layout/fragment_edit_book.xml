@@ -105,11 +105,13 @@
                                 android:textSize="20sp"
                                 android:layout_marginEnd="10sp"
                                 android:textStyle="bold"/>
-                            <me.zhanghai.android.materialratingbar.MaterialRatingBar
-                                android:id="@+id/edit_rating"
+                            <EditText
+                                android:id="@+id/edit_rating_ET"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:backgroundTint="@color/design_default_color_surface" />
+                                android:layout_marginTop="5sp"
+                                android:inputType="numberDecimal"
+                                android:gravity="top" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -135,6 +137,33 @@
                                 android:lines="1"
                                 android:gravity="top"
                                 android:hint="Description . . ."/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/review_group"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="15sp"
+                            android:layout_marginHorizontal="25sp"
+                            android:elevation="28sp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Review:"
+                                android:textSize="20sp"
+                                android:layout_marginEnd="10sp"
+                                android:textStyle="bold"/>
+                            <EditText
+                                android:id="@+id/edit_book_review_edittext"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5sp"
+                                android:inputType="textMultiLine"
+                                android:lines="1"
+                                android:gravity="top"
+                                android:hint="Thoughts . . ."/>
                         </LinearLayout>
 
                         <LinearLayout

@@ -61,12 +61,12 @@ class BookAdapter (private val context: Context,
         init {
             itemView.setOnClickListener(this)
             itemView.setOnLongClickListener {
-                editConfirmation()
+                editConfirmation(context)
                 true
             }
         }
 
-        private fun editConfirmation() {
+        private fun editConfirmation(context: Context) {
             val alertDialogBuilder = AlertDialog.Builder(context)
             alertDialogBuilder.setTitle("Edit Book")
             alertDialogBuilder.setMessage("Would you like to edit your book entry?")
@@ -77,11 +77,14 @@ class BookAdapter (private val context: Context,
                     val book = items[position]
                     val fragmentManager = (context as AppCompatActivity).supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()
-                    val yourFragment = EditBookFragment.newInstance(book)
-                    fragmentTransaction.replace(R.id.books_frame_layout, yourFragment)
+                    val editBookFragment = EditBookFragment.newInstance(
+                        context.javaClass.name,
+                        book)
+                    fragmentTransaction.replace(R.id.books_frame_layout, editBookFragment)
                     fragmentTransaction.addToBackStack(null)
                     fragmentTransaction.commit()
-                }            }
+                }
+            }
             alertDialogBuilder.setNegativeButton("Cancel") { dialog: DialogInterface, _: Int ->
                 dialog.dismiss()
             }

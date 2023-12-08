@@ -8,42 +8,48 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.graphics.toColor
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jaresinunez.booklet.BookAdapter
-import com.jaresinunez.booklet.Constants.bookAdapter
+import com.jaresinunez.booklet.Constants.REQUEST_KEY
+import com.jaresinunez.booklet.Constants.RESULT_KEY
 import com.jaresinunez.booklet.DisplayItem
 import com.jaresinunez.booklet.ItemApplication
+import com.jaresinunez.booklet.MainActivity
+import com.jaresinunez.booklet.OnDatasetChangedListener
 import com.jaresinunez.booklet.R
+import com.jaresinunez.booklet.SwipeToDeleteCallback
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class CurrentBooksFragment : Fragment() {
+class CurrentBooksFragment : Fragment(), OnDatasetChangedListener {
+    private val customScope = CoroutineScope(Job() + Dispatchers.Main)
+    private lateinit var bookAdapter: BookAdapter
     private lateinit var bookViewsRecyclerView: RecyclerView
+    private lateinit var view: View
     private val books = mutableListOf<DisplayItem>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_current_books, container, false)
+        view = inflater.inflate(R.layout.fragment_current_books, container, false)
         val addBookButton = view.findViewById<Button>(R.id.add_book_button_current)
 
-        // Add these configurations for the recyclerView and to configure the adapter
         val layoutManager = LinearLayoutManager(context)
         bookViewsRecyclerView = view.findViewById(R.id.book_recycler_view_current)
         bookViewsRecyclerView.layoutManager = layoutManager
@@ -51,7 +57,7 @@ class CurrentBooksFragment : Fragment() {
         bookAdapter = BookAdapter(
             view.context,
             books
-        )
+        ) {}
         bookViewsRecyclerView.adapter = bookAdapter
 
         bookViewsRecyclerView.layoutManager = LinearLayoutManager(activity).also {
@@ -59,14 +65,10 @@ class CurrentBooksFragment : Fragment() {
             bookViewsRecyclerView.addItemDecoration(dividerItemDecoration)
         }
 
-        updateAdapterWithDB()
-
-        if(books.isNotEmpty())
-            view.findViewById<ConstraintLayout>(R.id.card_layout).setBackgroundColor(Color.WHITE)
-        else
-            view.findViewById<ConstraintLayout>(R.id.card_layout).setBackgroundColor(Color.TRANSPARENT)
+        updateAdapterWithDB(view)
 
         addBookButton.setOnClickListener {
+            (requireActivity() as MainActivity).setBottomNavigationVisibility(false)
             val addBookFragment = AddBookFragment()
             replaceFragment(addBookFragment)
         }
@@ -75,21 +77,17 @@ class CurrentBooksFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setFragmentResultListener("requestKey") { _, result ->
-            // Handle the result received from Fragment B
-            val result = result.getString("resultKey")
+        setFragmentResultListener(REQUEST_KEY) { _, result ->
+            val result = result.getString(RESULT_KEY)
 
-            // Do something with the result
             Log.d("CurrentBooksFragment", "Received result: $result")
-            updateAdapterWithDB()
+            bookAdapter.notifyDataSetChanged()
         }
     }
-    private fun updateAdapterWithDB() {
-        // Perform database operations based on the result from FragmentB
-        // Update your UI or trigger additional actions as needed
-        lifecycleScope.launch {
+    private fun updateAdapterWithDB(view: View) {
+        customScope.launch {
             try {
-            (context?.applicationContext as ItemApplication).db.bookDaos().getAllCurrents()
+                (context?.applicationContext as ItemApplication).db.bookDaos().getAllCurrents()
                 .collect { databaseList ->
                     val mappedList = databaseList.map { entity ->
                         DisplayItem(
@@ -114,10 +112,16 @@ class CurrentBooksFragment : Fragment() {
                     }
                 }
             } catch (e: Exception) {
-                // Handle the exception (e.g., log, show an error message)
-                Log.e("DatabaseError", "Error loading books from database", e)
+                Log.e("DatabaseError|CURRENT", "Error loading books from database", e)
+                e.printStackTrace()
+            } finally {
+                customScope.cancel()
             }
         }
+        if(books.isNotEmpty())
+            view.setBackgroundColor(Color.WHITE)
+        else
+            view.setBackgroundColor(Color.TRANSPARENT)
     }
     private fun replaceFragment(fragment: Fragment) {
         val transaction = requireFragmentManager().beginTransaction()
@@ -127,11 +131,13 @@ class CurrentBooksFragment : Fragment() {
     }
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        // 'context' is now available
     }
     companion object {
         fun newInstance(): CurrentBooksFragment{
             return CurrentBooksFragment()
         }
+    }
+    override fun onDatasetChanged() {
+        updateAdapterWithDB(view)
     }
 }

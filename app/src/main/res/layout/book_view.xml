@@ -5,21 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="10sp"
-    android:layout_marginVertical="6sp">
+    android:layout_marginVertical="10sp">
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:orientation="horizontal">
-
             <ImageView
                 android:id="@+id/book_cover"
                 android:layout_width="100sp"
                 android:layout_height="150sp"
                 android:layout_marginEnd="10sp"
+                android:scaleType="fitCenter"
                 android:src="@drawable/book_cover_placeholder"/>
 
             <LinearLayout
@@ -45,13 +50,13 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="5sp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="5sp"
                         android:layout_marginEnd="5sp"
-                        tools:text="Rating: "
+                        android:text="Rating: "
                         android:textStyle="italic"
                         android:textSize="15sp"/>
 
@@ -59,21 +64,30 @@
                         android:id="@+id/book_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="5sp"
-                        tools:text="#"
+                        android:text="Not done reading!"
                         android:textStyle="italic"
                         android:textSize="15sp"/>
                 </LinearLayout>
-
+                <TextView
+                    android:id="@+id/book_description_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5sp"
+                    android:text="Description"
+                    android:textStyle="bold"
+                    android:textSize="15sp"/>
                 <TextView
                     android:id="@+id/book_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5sp"
                     tools:text="Book Description"
                     android:textStyle="normal"
                     android:textSize="15sp"/>
 
                 <LinearLayout
+                    android:id="@+id/button_group"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -84,13 +98,52 @@
                         tools:text="Purchase"
                         style="?android:attr/buttonBarButtonStyle" />
                     <Button
-                        android:id="@+id/review_button"
+                        android:id="@+id/review_book_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Review"
                         style="?android:attr/buttonBarButtonStyle" />
                 </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
+    </LinearLayout>
 
+    <TextView
+        android:id="@+id/review_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="5sp"
+        android:layout_marginTop="10sp"
+        android:text="Book review"
+        android:gravity="start"
+        android:textStyle="bold"
+        android:textSize="15sp"/>
+    <TextView
+        android:id="@+id/review_text_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/review_title_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="5sp"
+        android:layout_marginHorizontal="5sp"
+        android:gravity="start"
+        tools:text="Book review"
+        android:textStyle="normal"
+        android:textSize="15sp"/>
+    <Button
+        android:id="@+id/update_review_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/review_text_tv"
+        android:layout_gravity="center"
+        android:text="Update Review"
+        android:visibility="gone"
+        style="?android:attr/buttonBarButtonStyle" />
 </androidx.constraintlayout.widget.ConstraintLayout>

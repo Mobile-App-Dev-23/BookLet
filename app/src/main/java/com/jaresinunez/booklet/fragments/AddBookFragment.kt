@@ -18,21 +18,31 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
-import com.jaresinunez.booklet.Constants.bookAdapter
+import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.jaresinunez.booklet.Constants.FAIL
+import com.jaresinunez.booklet.Constants.REQUEST_CODE_ADD_BOOK_FRAGMENT
 import com.jaresinunez.booklet.ItemApplication
+import com.jaresinunez.booklet.MainActivity
 import com.jaresinunez.booklet.R
 import com.jaresinunez.booklet.databasestuff.AppDatabase
 import com.jaresinunez.booklet.databasestuff.ByteArrayHandling
 import com.jaresinunez.booklet.databasestuff.ByteArrayHandling.getByteArrayFromImageUri
 import com.jaresinunez.booklet.databasestuff.entities.BookEntity
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class AddBookFragment : Fragment() {
+    private val customScope = CoroutineScope(Job() + Dispatchers.Main)
     private val PICK_IMAGE_REQUEST = 1
     private lateinit var bookCoverImageView: ImageView
     private lateinit var uploadImageButton: Button
@@ -41,7 +51,6 @@ class AddBookFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -56,6 +65,11 @@ class AddBookFragment : Fragment() {
         val bookDescriptionET: EditText = view.findViewById(R.id.book_description_edittext)
         uploadImageButton = view.findViewById(R.id.upload_image_button)
         bookCoverImageView = view.findViewById(R.id.book_cover_image)
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Add Book"
+
+        Glide.with(requireContext())
+            .load(R.drawable.book_cover_placeholder)
+            .into(bookCoverImageView)
 
         if (isAdded){
             byteArray = ByteArrayHandling.getByteArrayFromResource(requireContext().resources, R.drawable.book_cover_placeholder)
@@ -72,35 +86,60 @@ class AddBookFragment : Fragment() {
                 val completedRB: RadioButton = view.findViewById(R.id.completed)
                 val futureRB: RadioButton = view.findViewById(R.id.future)
 
-                lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
-                        val bookDao = AppDatabase.getInstance(context?.applicationContext as ItemApplication).bookDaos()
-                        if (byteArray.isEmpty()) {
-                            byteArray = ByteArrayHandling.getByteArrayFromResource(requireContext().resources, R.drawable.book_cover_placeholder)
+                try {
+                    lifecycleScope.launch {
+                        withContext(Dispatchers.IO) {
+                            val bookDao =
+                                AppDatabase.getInstance(context?.applicationContext as ItemApplication)
+                                    .bookDaos()
+                            if (byteArray.isEmpty()) {
+                                byteArray = ByteArrayHandling.getByteArrayFromResource(
+                                    requireContext().resources,
+                                    R.drawable.book_cover_placeholder
+                                )
+                            }
+                            val newBook = BookEntity(
+                                id = 0,
+                                title = bookTitleET.text.toString(),
+                                author = bookAuthorET.text.toString(),
+                                description = bookDescriptionET.text.toString(),
+                                review = null,
+                                rating = null,
+                                pageCount = null,
+                                coverImage = byteArray,
+                                purchaseUrl = null,
+                                current = currentRB.isChecked,
+                                completed = completedRB.isChecked,
+                                future = futureRB.isChecked
+                            )
+
+                            val bookId = bookDao.insertBook(newBook)
+                            if (bookId < 0)
+                                throw InsertFailException("Failed to insert book", newBook)
+
+                            Log.d("DB ADDITION", newBook.toString())
+                            setFragmentResult(
+                                "requestKey",
+                                bundleOf("resultKey" to REQUEST_CODE_ADD_BOOK_FRAGMENT)
+                            )
                         }
-                        val newBook = BookEntity(
-                            id = 0,
-                            title = bookTitleET.text.toString(),
-                            author = bookAuthorET.text.toString(),
-                            description = bookDescriptionET.text.toString(),
-                            review = null,
-                            rating = null,
-                            pageCount = null,
-                            coverImage = byteArray,
-                            purchaseUrl = null,
-                            current = currentRB.isChecked,
-                            completed = completedRB.isChecked,
-                            future = futureRB.isChecked
-                        )
-                        bookDao.insertBook(newBook)
-                        Log.d("DB ADDITION", newBook.toString())
-                    }
-                    withContext(Dispatchers.Main) {
-                        bookAdapter.notifyDataSetChanged()
                     }
                 }
-
-                setFragmentResult("requestKey", bundleOf("resultKey" to REQUEST_CODE_FRAGMENT_B))
+                catch (e: Exception) {
+                    Log.e("DatabaseError|CURRENT", "Error loading books from database", e)
+                    e.printStackTrace()
+                }
+                catch (e: InsertFailException){
+                    e.print()
+                    showErrorAlert()
+                    setFragmentResult(
+                        "requestKey",
+                        bundleOf("resultKey" to REQUEST_CODE_ADD_BOOK_FRAGMENT + FAIL)
+                    )
+                }
+                finally {
+                    customScope.cancel()
+                }
 
                 val fragmentManager = requireActivity().supportFragmentManager
                 fragmentManager.popBackStack()
@@ -111,10 +150,30 @@ class AddBookFragment : Fragment() {
 
         return view
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            (requireActivity() as MainActivity).setBottomNavigationVisibility(true)
+            val fragmentManager = requireActivity().supportFragmentManager
+            fragmentManager.popBackStack()
+        }
+    }
+
     private fun showRequiredSectionAlert() {
         val alertDialogBuilder = AlertDialog.Builder(context)
         alertDialogBuilder.setTitle("Required Section")
         alertDialogBuilder.setMessage("Please select an option.")
+        alertDialogBuilder.setPositiveButton("OK") { dialog: DialogInterface, _: Int ->
+            dialog.dismiss()
+        }
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+    }
+    private fun showErrorAlert() {
+        val alertDialogBuilder = AlertDialog.Builder(context)
+        alertDialogBuilder.setTitle("ERROR")
+        alertDialogBuilder.setMessage("There was an error adding this book. Try again later.")
         alertDialogBuilder.setPositiveButton("OK") { dialog: DialogInterface, _: Int ->
             dialog.dismiss()
         }
@@ -142,21 +201,18 @@ class AddBookFragment : Fragment() {
     }
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        // 'context' is now available
-    }
-    private fun refreshFragment(fragment: Fragment) {
-        val fragmentManager = requireActivity().supportFragmentManager
-        val transaction = fragmentManager.beginTransaction()
-        transaction.replace(R.id.books_frame_layout, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
     }
     companion object {
         @JvmStatic
         fun newInstance(): AddBookFragment {
             return AddBookFragment()
         }
-
-        const val REQUEST_CODE_FRAGMENT_B = "NEW_BOOK"
     }
 }
+
+class InsertFailException(message: String, val book: BookEntity) : Throwable(message) {
+    fun print() {
+        Log.d("DB ADDITION", "$message: FAILED. Book: $book")
+    }
+}
+

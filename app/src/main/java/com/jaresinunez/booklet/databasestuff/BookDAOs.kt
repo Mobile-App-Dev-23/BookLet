@@ -3,6 +3,7 @@ package com.jaresinunez.booklet.databasestuff
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.jaresinunez.booklet.databasestuff.entities.BookEntity
 import com.jaresinunez.booklet.databasestuff.entities.CompletedBookEntity
 import com.jaresinunez.booklet.databasestuff.entities.CurrentBookEntity
@@ -24,9 +25,12 @@ interface BookDAOs {
     @Query("SELECT bookCoverImage FROM book_table WHERE id = :bookId")
     fun getBookCoverImageById(bookId: Long): ByteArray?
 
+    @Query("SELECT COUNT(*) FROM book_table")
+    fun getBookTableSize(): Flow<Int>
+
     // insert()
     @Insert
-    fun insertBook(book: BookEntity)
+    fun insertBook(book: BookEntity):Long
 
     @Insert
     fun insertAllCurrents(books: CurrentBookEntity)
@@ -47,14 +51,10 @@ interface BookDAOs {
     @Query("DELETE FROM book_table WHERE completed=1")
     fun deleteAllCompleted()
 
-    /*
-    @Query("SELECT AVG(calories) as average FROM food_item_table")
-    fun getAverageCals(): Flow<Int>
+    @Query("DELETE FROM book_table WHERE id = :bookId")
+    fun deleteBook(bookId: Long)
 
-    @Query("SELECT MIN(calories) as minimum FROM food_item_table")
-    fun getMinCals(): Flow<Int>
-
-    @Query("SELECT MAX(calories) as maximum FROM food_item_table")
-    fun getMaxCals(): Flow<Int>
-     */
+    //update
+    @Update
+    fun updateBook(book: BookEntity)
 }

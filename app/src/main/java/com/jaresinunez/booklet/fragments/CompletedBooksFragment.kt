@@ -89,6 +89,7 @@ class CompletedBooksFragment : Fragment(), OnDatasetChangedListener {
         transaction.replace(R.id.books_frame_layout, reviewFragment)
         transaction.addToBackStack(null)
         transaction.commit()
+        // comment
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

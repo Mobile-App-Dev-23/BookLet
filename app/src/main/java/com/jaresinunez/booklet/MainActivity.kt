@@ -1,5 +1,6 @@
 package com.jaresinunez.booklet
 
+import android.annotation.SuppressLint
 import android.content.ClipData.Item
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,7 +27,7 @@ private const val TAG = "MainActivity/"
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
+    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,14 +38,26 @@ class MainActivity : AppCompatActivity() {
         val currentBooksFragment: Fragment = CurrentBooksFragment()
         val completedBooksFragment: Fragment = CompletedBooksFragment()
         val futureBooksFragment: Fragment = FutureBooksFragment()
-        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation_main)
+
+        supportActionBar?.setDefaultDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "My Bookshelf"
 
         bottomNavigationView.setOnItemSelectedListener {item ->
             lateinit var fragment: Fragment
             when (item.itemId){
-                R.id.nav_current -> fragment = currentBooksFragment
-                R.id.nav_completed -> fragment = completedBooksFragment
-                R.id.nav_future -> fragment = futureBooksFragment
+                R.id.nav_current -> {
+                    setBottomNavigationVisibility(true)
+                    fragment = currentBooksFragment
+                }
+                R.id.nav_completed -> {
+                    setBottomNavigationVisibility(true)
+                    fragment = completedBooksFragment
+                }
+                R.id.nav_future -> {
+                    setBottomNavigationVisibility(true)
+                    fragment = futureBooksFragment
+                }
             }
             replaceFragment(fragment)
             true
@@ -63,6 +76,11 @@ class MainActivity : AppCompatActivity() {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.books_frame_layout, bookFragment)
         fragmentTransaction.commit()
+    }
+
+    fun setBottomNavigationVisibility(isVisible: Boolean) {
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_main)
+        bottomNavigationView.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
     private fun hideEmptyShelf(flowList: Flow<List<BookEntity>>){

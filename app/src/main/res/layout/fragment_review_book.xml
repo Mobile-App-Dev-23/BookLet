@@ -4,120 +4,133 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.ReviewBookFragment">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <ImageView
-            android:id="@+id/book_cover_image"
-            android:layout_width="130sp"
-            android:layout_height="180sp"
-            android:layout_gravity="center"
-            android:layout_marginTop="15sp"
-            android:src="@drawable/book_cover_placeholder"
-            android:contentDescription="Book Cover" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Title:"
-            android:textSize="20sp"
-            android:layout_marginBottom="8sp"
-            android:layout_marginStart="20sp"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Title"
-            android:layout_marginStart="20sp"
-            android:textSize="20sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Author:"
-            android:textSize="20sp"
-            android:layout_marginTop="8sp"
-            android:layout_marginBottom="8sp"
-            android:layout_marginStart="20sp"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Author"
-            android:layout_marginStart="20sp"
-            android:textSize="20sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Description:"
-            android:textSize="20sp"
-            android:layout_marginTop="8sp"
-            android:layout_marginBottom="8sp"
-            android:layout_marginStart="20sp"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Description"
-            android:layout_marginStart="20sp"
-            android:textSize="20sp"/>
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="15sp"
-            android:layout_marginHorizontal="25sp"
-            android:elevation="28sp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rating:"
-                android:textSize="20sp"
-                android:layout_marginEnd="10sp"
-                android:textStyle="bold"/>
-            <EditText
-                android:id="@+id/rating"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Enter Author"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="15sp"
-            android:layout_marginHorizontal="25sp"
-            android:elevation="28sp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Review:"
-                android:textSize="20sp"
-                android:layout_marginEnd="10sp"
-                android:textStyle="bold"/>
-            <EditText
-                android:id="@+id/review"
+            android:layout_height="0sp"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/book_cover_image_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="4"
-                android:gravity="top"
-                android:hint="Enter Author"/>
+                android:layout_weight="2"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                android:layout_marginTop="15sp"
+                android:src="@drawable/book_cover_placeholder"
+                android:contentDescription="Book Cover" />
         </LinearLayout>
-        <Button
-            android:id="@+id/submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15sp"
-            android:layout_marginTop="10sp"
-            android:layout_gravity="center"
-            android:text="Submit"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="2"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title:"
+                android:textSize="20sp"
+                android:layout_marginBottom="8sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginStart="20sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/book_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:layout_marginStart="20sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Author:"
+                android:textSize="20sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="8sp"
+                android:layout_marginStart="20sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Author"
+                android:layout_marginStart="20sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description:"
+                android:textSize="20sp"
+                android:layout_marginTop="8sp"
+                android:layout_marginBottom="8sp"
+                android:layout_marginStart="20sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:layout_marginStart="20sp"
+                android:inputType="textMultiLine"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10sp"
+                android:layout_marginHorizontal="25sp"
+                android:elevation="28sp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rating:"
+                    android:textSize="20sp"
+                    android:layout_marginEnd="10sp"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/rating"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:layout_weight="1"
+                    android:hint="Enter Author"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="15sp"
+                android:layout_marginHorizontal="25sp"
+                android:elevation="28sp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Review:"
+                    android:textSize="20sp"
+                    android:layout_marginEnd="10sp"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:maxLines="4"
+                    android:hint="Share your thoughts..."/>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp"
+        android:layout_marginTop="10sp"
+        android:layout_gravity="center|bottom"
+        android:text="Submit"/>
 </FrameLayout>

@@ -30,7 +30,7 @@ interface BookDAOs {
 
     // insert()
     @Insert
-    fun insertBook(book: BookEntity)
+    fun insertBook(book: BookEntity):Long
 
     @Insert
     fun insertAllCurrents(books: CurrentBookEntity)
@@ -51,18 +51,10 @@ interface BookDAOs {
     @Query("DELETE FROM book_table WHERE completed=1")
     fun deleteAllCompleted()
 
+    @Query("DELETE FROM book_table WHERE id = :bookId")
+    fun deleteBook(bookId: Long)
+
     //update
     @Update
     fun updateBook(book: BookEntity)
-
-    /*
-    @Query("SELECT AVG(calories) as average FROM food_item_table")
-    fun getAverageCals(): Flow<Int>
-
-    @Query("SELECT MIN(calories) as minimum FROM food_item_table")
-    fun getMinCals(): Flow<Int>
-
-    @Query("SELECT MAX(calories) as maximum FROM food_item_table")
-    fun getMaxCals(): Flow<Int>
-     */
 }

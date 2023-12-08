@@ -51,6 +51,9 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
 
+
+    implementation("me.zhanghai.android.materialratingbar:library:1.4.0")
+
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
 

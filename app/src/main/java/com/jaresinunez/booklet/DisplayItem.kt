@@ -1,5 +1,7 @@
 package com.jaresinunez.booklet
 
+import com.jaresinunez.booklet.databasestuff.entities.BookEntity
+
 data class DisplayItem(
     val id: Long,
     val bookTitle: String?,
@@ -14,6 +16,22 @@ data class DisplayItem(
     val completed: Boolean,
     val future: Boolean
 ): java.io.Serializable {
+    fun toBookEntity(): BookEntity {
+        return BookEntity(
+            id = this.id,
+            title = this.bookTitle.orEmpty(),
+            author = this.bookAuthor.orEmpty(),
+            description = this.bookDescription.orEmpty(),
+            review = this.bookReview.orEmpty(),
+            rating = this.bookRating ?: 0.0, // Provide a default value if bookRating is null
+            pageCount = this.bookPageCount ?: 0, // Provide a default value if pageCount is null
+            coverImage = this.bookCoverImage ?: ByteArray(0), // Provide a default value if coverImage is null
+            purchaseUrl = this.bookPurchaseURL.orEmpty(),
+            current = this.current,
+            completed = this.completed,
+            future = this.future
+        )
+    }
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

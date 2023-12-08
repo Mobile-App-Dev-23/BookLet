@@ -109,10 +109,15 @@ class ReviewBookFragment : Fragment() {
                             )
                         }
                     }
+                    (requireActivity() as MainActivity).setBottomNavigationVisibility(true)
+                    val fragmentManager = requireActivity().supportFragmentManager
+                    fragmentManager.popBackStack()
                 } else {
                     Log.e("VALUE_ERROR", "Book is null")
+                    (requireActivity() as MainActivity).setBottomNavigationVisibility(true)
+                    val fragmentManager = requireActivity().supportFragmentManager
+                    fragmentManager.popBackStack()
                 }
-                requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
             } else {
                 showRequiredSectionAlert()
             }

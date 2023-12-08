@@ -215,6 +215,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="15sp"
             android:layout_gravity="center"
-            android:text="Add Book"/>
+            android:text="Update Book"/>
     </LinearLayout>
 </FrameLayout>

@@ -38,7 +38,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.internal.addHeaderLenient
 
 class EditBookFragment : Fragment() {
     private val customScope = CoroutineScope(Job() + Dispatchers.Main)
@@ -55,25 +54,11 @@ class EditBookFragment : Fragment() {
     private lateinit var reviewGroupLinearLayout: LinearLayout
     private lateinit var ratingET: EditText
     private val PICK_IMAGE_REQUEST = 1
-    private var imageURI: Uri? = null
-    private lateinit var contextFromAdapter: Context
+    private lateinit var imageURI: Uri
     lateinit var byteArray: ByteArray
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val activityClassName = arguments?.getString(ACTIVITY_CLASS_NAME)
-            ?: throw IllegalArgumentException("Activity class name must be provided in arguments")
-
-        try {
-            contextFromAdapter = Class.forName(activityClassName).newInstance() as Context
-        } catch (e: ClassNotFoundException) {
-            throw IllegalArgumentException("Invalid activity class name provided in arguments", e)
-        }
-        if (contextFromAdapter != null) {
-            byteArray = ByteArrayHandling.getByteArrayFromResource(requireContext().resources, R.drawable.book_cover_placeholder)
-        } else {
-            Log.e("EditBookFragment", "Context is null")
-        }
     }
 
     override fun onCreateView(
@@ -133,6 +118,13 @@ class EditBookFragment : Fragment() {
                 } else {
                     review = null
                     rating = null
+                }
+
+                if (byteArray.isEmpty()){
+                    byteArray = ByteArrayHandling.getByteArrayFromResource(
+                        requireContext().resources,
+                        R.drawable.book_cover_placeholder
+                    )
                 }
 
                 val updatedBook = arg!!.copy(
@@ -252,16 +244,14 @@ class EditBookFragment : Fragment() {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
             val selectedImageUri = data.data
             if (selectedImageUri != null) {
-                imageURI = selectedImageUri
-                if (isAdded)
-                    byteArray = ByteArrayHandling.getByteArrayFromImageUri(contextFromAdapter, imageURI!!)
+                byteArray = ByteArrayHandling.getByteArrayFromImageUri(requireContext(), selectedImageUri!!)
             }
             bookCoverImageView.setImageURI(selectedImageUri)
         }
     }
 
     private fun showRequiredSectionAlert() {
-        val alertDialogBuilder = AlertDialog.Builder(contextFromAdapter)
+        val alertDialogBuilder = AlertDialog.Builder(requireContext())
         alertDialogBuilder.setTitle("Required Section")
         alertDialogBuilder.setMessage("Make sure all fields are filled.")
         alertDialogBuilder.setPositiveButton("OK") { dialog: DialogInterface, _: Int ->

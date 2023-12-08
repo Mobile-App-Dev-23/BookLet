@@ -73,6 +73,11 @@ class ReviewBookFragment : Fragment() {
             else
                 descriptionTextView.text = "Description Unavailable"
 
+            if (book.completed){
+                bookRatingEditText.setText(book.bookRating.toString())
+                bookReviewEditText.setText(book.bookReview)
+            }
+
             if (book.bookCoverImage != null)
                 Glide.with(requireContext())
                     .load(book.bookCoverImage)

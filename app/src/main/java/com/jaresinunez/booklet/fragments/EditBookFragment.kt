@@ -54,7 +54,6 @@ class EditBookFragment : Fragment() {
     private lateinit var reviewGroupLinearLayout: LinearLayout
     private lateinit var ratingET: EditText
     private val PICK_IMAGE_REQUEST = 1
-    private lateinit var imageURI: Uri
     lateinit var byteArray: ByteArray
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -193,10 +192,18 @@ class EditBookFragment : Fragment() {
             bookAuthorET.setText(book.bookAuthor)
             bookDescriptionET.setText(book.bookDescription)
 
-            if (book.bookCoverImage != null)
+            if (book.bookCoverImage != null) {
+                byteArray = book.bookCoverImage!!
                 Glide.with(requireContext())
                     .load(book.bookCoverImage)
                     .into(bookCoverImageView)
+            }
+            else{
+                byteArray = ByteArrayHandling.getByteArrayFromResource(
+                    requireContext().resources,
+                    R.drawable.book_cover_placeholder
+                )
+            }
 
             val currentRB: RadioButton = view.findViewById(R.id.current_edit)
             val completedRB: RadioButton = view.findViewById(R.id.completed_edit)

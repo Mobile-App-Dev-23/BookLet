@@ -98,7 +98,7 @@ class CompletedBooksFragment : Fragment(), OnDatasetChangedListener {
         setFragmentResultListener(REQUEST_KEY) { _, result ->
             val result = result.getString(RESULT_KEY)
 
-            (requireActivity() as MainActivity).setBottomNavigationVisibility(true)
+            //(requireActivity() as MainActivity).setBottomNavigationVisibility(true)
             Log.d("CompletedBooksFragment", "Received result: $result")
             bookAdapter.notifyDataSetChanged()
         }

@@ -78,6 +78,7 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
+
     fun setBottomNavigationVisibility(isVisible: Boolean) {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_main)
         bottomNavigationView.visibility = if (isVisible) View.VISIBLE else View.GONE

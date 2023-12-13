@@ -70,12 +70,11 @@
 
 [Add screenshot of your Project Board with three milestones visible in
 this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
 
 ## Issue cards
 
-- [Add screenshot of your Project Board with the issues that you've been working on for this unit's milestone] <img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
-- [Add screenshot of your Project Board with the issues that you're working on in the **NEXT sprint**. It should include issues for next unit with assigned owners.] <img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+- [Add screenshot of your Project Board with the issues that you've been working on for this unit's milestone] 
+- [Add screenshot of your Project Board with the issues that you're working on in the **NEXT sprint**. It should include issues for next unit with assigned owners.] 
 
 ## Issues worked on this sprint
 
@@ -88,7 +87,7 @@ this section]
 
 ## GitHub Project board
 
-[Add screenshot of your Project Board with the updated status of issues for Milestone 3. Note that these should include the updated issues you worked on for this sprint and not be a duplicate of Milestone 2 Project board.] <img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+[Add screenshot of your Project Board with the updated status of issues for Milestone 3. Note that these should include the updated issues you worked on for this sprint and not be a duplicate of Milestone 2 Project board.] <img src="https://github.com/Mobile-App-Dev-23/BookLet/blob/main/GitHubProjectBoard.png?raw=true" width=600>
 
 ## Completed user stories
 

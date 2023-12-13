@@ -97,9 +97,10 @@ this section]
 from the original requirements
 
 [Add video/gif of your current application that shows build progress]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+<img src="[YOUR_WIREFRAME_IMAGE_URL](https://github.com/Mobile-App-Dev-23/BookLet/blob/main/BookLetGif.GIF?raw=true)" width=600>
 
 ## App Demo Video
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/wBuvLRAQRqI/0.jpg)](http://www.youtube.com/watch?v=wBuvLRAQRqI "Booklet App Presentation")
 
 - Embed the YouTube/Vimeo link of your Completed Demo Day prep video
 <!-- Recommended tools:
